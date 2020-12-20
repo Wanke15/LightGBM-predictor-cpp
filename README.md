@@ -6,20 +6,28 @@ git clone --recursive --branch stable --depth 1 https://github.com/Microsoft/Lig
     mkdir LightGBM/build && \
     cd LightGBM/build && \
     cmake .. && \
-    make -j4 && \
+    make -j8 && \
     make install && \
 ```
 
-### 2. Build test.cpp
+### 2. Train a binary classification model
+```bash
+cd LightGBM/examples/binary_classification &&
+    lightgbm config=train.conf
+```
+We will get the output model: **LightGBM_model.txt**, it will be used in test.cpp
+
+### 3. Build test.cpp
+In test.cpp, **row** and **row2** are from *LightGBM/examples/binary_classification/binary.train*
 ```bash
 g++ -g -Wall -std=c++11 test.cpp -l_lightgbm -Wl,-R /usr/local/lib -o test
 ```
 
-### 3. Run
+### 4. Run
 ```bash
 ./test
 ```
-### 4. Output
+### 5. Output
 ```
 Load model success!
 Predict state: 0
